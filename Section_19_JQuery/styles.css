@@ -1,0 +1,15 @@
+.big-title{
+    font-size: 10rem;
+    color: yellow;
+}
+
+.margin-50{
+    margin: 50px;
+    color: red;
+    font-family: sans-serif;
+}
+
+.prettier-font{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+}
