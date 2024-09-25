@@ -21,6 +21,18 @@ function playSound(name){
     audio.play();
 }
 
+/**
+ * Toggles the a style class that temporarily flashes grey on the selected button
+ * 
+ * @param {string} currentColor - id for button pressed
+ * @return {None} - flashes the button, returns nothing
+ */
+function animatePress(currentColor){
+    $('#'+currentColor).addClass('pressed');
+    setTimeout(() => {
+        $('#'+currentColor).removeClass('pressed');
+    }, 100);
+}
 
 
 // Logging the random pattern 
@@ -40,6 +52,7 @@ $(`#${randomChosenColour}`).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     let userChosenColour = event.target.id;
     userClickedPattern.push(userChosenColour);
     playSound(userChosenColour);
+    animatePress(userChosenColour);
  })
 
 
