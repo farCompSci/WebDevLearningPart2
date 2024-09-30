@@ -1,59 +1,112 @@
+let buttonColours = ["red", "blue", "green", "yellow"];
+let gamePattern = [];
+let userClickedPattern = [];
+let gameStarted = false;
+let level = 0;
 
 /**
- * Computes a random number bewteen 1 and 3
+ * Computes a random number between 0 and 3
  *
- * @params - None
- * @return {number} Randomly generated number between 1 and 3.
+ * @return {number} Randomly generated number between 0 and 3.
  */
-function nextSequence(){
+function nextSequence() {
+    userClickedPattern = [];  // Reset user input for the new level
+    level++;
+    $('#level-title').text('Level: ' + level);
+
     let randomNumber = Math.floor(Math.random() * 4); // Random number between 0 and 3
-    return randomNumber;
+    let randomChosenColour = buttonColours[randomNumber];
+    gamePattern.push(randomChosenColour);
+
+    // Flash the chosen button and play sound
+    $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
+    playSound(randomChosenColour);
+    return randomChosenColour;
 }
 
 /**
  * Plays one of the sounds depending on the name of the file
- * 
- * @param {string} name - name of the file, excluding the extenstion
- * @returns {None} - plays a sound
+ *
+ * @param {string} name - name of the file, excluding the extension
  */
-function playSound(name){
+function playSound(name) {
     let audio = new Audio("sounds/" + name + ".mp3");
     audio.play();
 }
 
 /**
- * Toggles the a style class that temporarily flashes grey on the selected button
- * 
+ * Toggles the style class that temporarily flashes grey on the selected button
+ *
  * @param {string} currentColor - id for button pressed
- * @return {None} - flashes the button, returns nothing
  */
-function animatePress(currentColor){
-    $('#'+currentColor).addClass('pressed');
+function animatePress(currentColor) {
+    $("#" + currentColor).addClass('pressed');
     setTimeout(() => {
-        $('#'+currentColor).removeClass('pressed');
+        $("#" + currentColor).removeClass('pressed');
     }, 100);
 }
 
+/**
+ * Checks whether the user correctly remembers the game pattern
+ *
+ * @param {number} currentLevel - The current game level
+ */
+function checkAnswer(currentLevel) {
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+        if (userClickedPattern.length === gamePattern.length) {
+            setTimeout(function () {
+                nextSequence();
+            }, 1000);
+        }
+        return true;
+    } else {
+        // Flash red on game over
+        $("body").addClass("game-over");
+        setTimeout(() => {
+            $("body").removeClass("game-over");
+        }, 200);
 
-// Logging the random pattern 
-let gamePattern = [];
-let buttonColours = ["red", "blue", "green", "yellow"];
-let userClickedPattern = [];
+        // Play the wrong sound
+        playSound("wrong");
 
-// Getting the random number and adding it to the game pattern
-let randomChosenColour = buttonColours[nextSequence()];
-gamePattern.push(randomChosenColour);
+        // Update the title
+        $("#level-title").text("Game Over, Press Any Key to Restart");
 
-// Making the selected button flash
-$(`#${randomChosenColour}`).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+        // Reset the game
+        startOver();
+        return false;
+    }
+}
 
-// Logging Button Clicks and appending to list of buttons clicked by user
- $('.btn').on('click',(event)=>{
+/**
+ * Starts or restarts the game
+ */
+function startOver() {
+    level = 0;
+    gamePattern = [];
+    gameStarted = false;
+    $("#level-title").text("Press A Key to Start");
+}
+
+/**
+ * Starts the game when a key is pressed
+ */
+$(document).keypress(function () {
+    if (!gameStarted) {
+        $("#level-title").text("Level " + level);
+        nextSequence();
+        gameStarted = true;
+    }
+});
+
+/**
+ * Logs button clicks and appends to the list of buttons clicked by the user
+ */
+$(".btn").on("click", function (event) {
     let userChosenColour = event.target.id;
     userClickedPattern.push(userChosenColour);
     playSound(userChosenColour);
     animatePress(userChosenColour);
- })
 
-
-
+    checkAnswer(userClickedPattern.length - 1);
+});
