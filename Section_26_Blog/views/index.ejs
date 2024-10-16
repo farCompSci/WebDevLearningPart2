@@ -1,0 +1,17 @@
+<%- include('partials/header.ejs') %>
+<h1 id="title">Welcome to Your Personal Blog Area!</h1>
+<div class="container">
+    <h2 class="sub-title">Posts</h2>
+    <% if (locals.posts.length > 0) { %>
+        <% for (let i=0; i<locals.posts.length; i++) { %>
+            <div class="post">
+                <h3><%= locals.posts[i].title %></h3>
+                <p><%= locals.posts[i].content %></p>
+                <p><%= locals.posts[i].author %></p>
+            </div>
+        <% } %>
+    <% } else { %>
+        <p>No posts yet!</p>
+    <% } %>
+    <a href="/addPost"><button id="add-post">Add Post</button></a>
+</div>

@@ -1,0 +1,261 @@
+#title{
+    text-align: center;
+    font-size: 3.5rem;
+    margin-top: 2rem;
+}
+
+.navbar {
+    background-color: #2c3e50;
+    padding: 1rem;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navbar-logo {
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .home-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .navbar-menu {
+    display: flex;
+  }
+  
+  .navbar-item {
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-item:hover {
+    color: #3498db;
+  }
+  
+  .navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #2c3e50;
+      padding: 1rem;
+    }
+  
+    .navbar-menu.is-active {
+      display: flex;
+    }
+  
+    .navbar-item {
+      padding: 0.75rem 0;
+    }
+  
+    .navbar-toggle {
+      display: block;
+    }
+  
+    .navbar-toggle-icon {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+  
+    .navbar-toggle-icon::before,
+    .navbar-toggle-icon::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+  
+    .navbar-toggle-icon::before {
+      top: -8px;
+    }
+  
+    .navbar-toggle-icon::after {
+      bottom: -8px;
+    }
+  }
+
+  /* styles for posts section */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    position: relative;
+    min-height: 200px;  /* Ensure minimum height for empty state */
+  }
+  
+  .sub-title {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    text-align: center;  /* Center the subtitle */
+  }
+  
+  .post {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .post h3 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .post p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .post p:last-child {
+    color: #777;
+    font-style: italic;
+    text-align: right;
+    margin-bottom: 0;
+  }
+  
+  #add-post {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;  /* Position the button absolutely */
+    bottom: 20px;        /* 20px from the bottom of the container */
+    right: 20px;         /* 20px from the right of the container */
+  }
+  
+  #add-post:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .sub-title {
+      font-size: 24px;
+    }
+  
+    .post {
+      padding: 10px;
+    }
+  
+    .post h3 {
+      font-size: 20px;
+    }
+  
+    #add-post {
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+
+  /* Form container */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Form heading */
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form labels */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Form input fields */
+input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Textarea styling */
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+/* Submit button */
+input[type="submit"] {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Submit button hover effect */
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+  
