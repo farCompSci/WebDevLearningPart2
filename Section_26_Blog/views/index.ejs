@@ -2,16 +2,43 @@
 <h1 id="title">Welcome to Your Personal Blog Area!</h1>
 <div class="container">
     <h2 class="sub-title">Posts</h2>
-    <% if (locals.posts.length > 0) { %>
-        <% for (let i=0; i<locals.posts.length; i++) { %>
-            <div class="post">
-                <h3><%= locals.posts[i].title %></h3>
-                <p><%= locals.posts[i].content %></p>
-                <p><%= locals.posts[i].author %></p>
+    <% if (Object.keys(locals.posts).length > 0) { %>
+        <% Object.entries(locals.posts).forEach(([title, post]) => { %>
+            <div class="post" id="post-<%= encodeURIComponent(title) %>">
+                <h3><%= title %></h3>
+                <p><%= post.content %></p>
+                <p><%= post.author %></p>
+                <button class="delete-button" data-title="<%= encodeURIComponent(title) %>">Delete</button>
             </div>
-        <% } %>
+        <% }) %>
     <% } else { %>
         <p>No posts yet!</p>
     <% } %>
+    
     <a href="/addPost"><button id="add-post">Add Post</button></a>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const title = this.getAttribute('data-title');
+            deletePost(title);
+        });
+    });
+});
+
+function deletePost(title) {
+    fetch(`/post/${title}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        // Remove the post from the DOM
+        document.getElementById(`post-${title}`).remove();
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>

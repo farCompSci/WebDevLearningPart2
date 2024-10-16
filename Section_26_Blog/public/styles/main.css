@@ -167,6 +167,8 @@
     position: absolute;  /* Position the button absolutely */
     bottom: 20px;        /* 20px from the bottom of the container */
     right: 20px;         /* 20px from the right of the container */
+    bottom: -0.5rem;
+
   }
   
   #add-post:hover {
@@ -259,3 +261,11 @@ input[type="submit"]:hover {
     background-color: #218838;
 }
   
+.delete-button{
+    background-color: red;
+    color: white;
+    border-radius: 10%;
+    border-color: red;
+    padding: 5px;
+    margin-left: 45rem;
+}

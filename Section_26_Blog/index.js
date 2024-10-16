@@ -8,9 +8,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = 3000;
 
+
 // Setting up our middleware
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Seting up the blog posts
 const posts = {};
@@ -35,7 +37,15 @@ app.post("/submitPost", (req, res) => {
     res.render("index.ejs", { posts: posts });
 })
 
-
+app.delete("/post/:title", (req, res) => {
+    const title = decodeURIComponent(req.params.title);
+    if (posts[title]) {
+        delete posts[title];
+        res.json({ message: 'Post deleted successfully' });
+    } else {
+        res.status(404).json({ message: 'Post not found' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
