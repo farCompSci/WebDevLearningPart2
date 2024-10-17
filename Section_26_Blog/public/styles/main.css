@@ -262,10 +262,23 @@ input[type="submit"]:hover {
 }
   
 .delete-button{
+    display: inline-block;
     background-color: red;
     color: white;
     border-radius: 10%;
     border-color: red;
     padding: 5px;
     margin-left: 45rem;
+    margin-top: 0.5rem;
+}
+
+.edit-button{
+  display: inline-block;
+  background-color: blue;
+  color: white;
+  border-radius: 10%;
+  border-color: blue;
+  padding: 5px;
+  margin-left: 46rem;
+  margin-top: 0.5rem;
 }
