@@ -43,7 +43,9 @@ app.post("/", async (req, res) => {
     try {
       const response = await axios.get(url);
       const result = response.data;
-      res.render("index.ejs", { data: result });
+      // console.log(result);
+      res.render("index.ejs", { data: result[0] }); // could be made better by doing a random activity
+      // res.render("index.ejs", { data: result });
     } 
     catch (error) {
       console.error("Failed to make request:", error.message);
