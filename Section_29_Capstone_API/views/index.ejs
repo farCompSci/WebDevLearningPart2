@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Book Search Home Page</title>
+</head>
+<body>
+    <div class="header">
+        <h1 id="title">Welcome to Book Search!</h1>
+        <h2 id="subtitle">Here you can find the books that are available on Open Library!</h2>
+        <p class="description">This project uses Open Library's API to look up the books that match your search!</p>
+    </div>
+
+    <div class="formContainer">
+        <form action="/search" method="post">
+            <h2 id="formTitle">Enter the Book Details Below</h2>
+
+            <label for="searchString">Book Title: 
+            <input type="text" name="bookTitle" id="BookTitle"></label><br/>
+
+            <label for="author">Author: 
+            <input type="text" name="author" id="author"></label>
+
+            <input type="submit" value="Search" class="searchButton">
+        </form>
+    </div>
+    
+    <div class="resultsContainer">
+        <% if (typeof numResults !== 'undefined') { %>
+            <p id="numResults">Number of results: <%= numResults %></p>
+            <p id="borrowable">Borrowable: <%= borrowable ? 'Yes' : 'No' %></p>
+        <% } %>
+    </div>
+</body>
+</html>
