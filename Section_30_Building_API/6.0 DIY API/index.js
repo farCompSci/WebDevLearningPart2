@@ -36,16 +36,61 @@ app.post('/jokes',(req,res)=>{
     id: jokes.length + 1
   };
   jokes.push(newJoke);
-  res.json(newJoke);
+  res.json(newJoke); 
 })
 
-//5. PUT a joke
+//5. PUT a joke{
+app.put('/jokes/:id', (req, res) =>{ // Note that for this, the body is urlencoded for the postman put request
+  const passedId = parseInt(req.params.id);
+  const replacementJoke = {
+    id: passedId,
+    jokeText: req.body.text,
+    jokeType: req.body.type
+  };
+  const searchIdx = jokes.findIndex((joke)=> joke.id === passedId);
+  jokes[searchIdx] = replacementJoke;
+  res.json(replacementJoke);
+})
 
 //6. PATCH a joke
+app.patch('/jokes/:id', (req,res)=>{
+
+  const passedId = parseInt(req.params.id);
+  const foundJoke = jokes.find((joke) => joke.id === passedId);
+  const replacementJoke = {
+    id: passedId,
+    jokeText: req.body.text || foundJoke.jokeText,
+    jokeType: req.body.type || foundJoke.jokeType
+  };
+
+  const searchIdx = jokes.findIndex((joke) => joke.id === passedId);
+  jokes[searchIdx] = replacementJoke;
+  res.json(replacementJoke);
+  
+})
 
 //7. DELETE Specific joke
+app.delete('jokes/:id', (req,res)=>{
+  const passedId = parseInt(req.params.id);
+  const searchIdx = jokes.findIndex((joke) => joke.id === passedId);
+  if (searchIdx > -1) {
+    jokes.splice(searchIdx, 1);
+    res.sendStatus(200);
+  } else {
+    res.status(404).json({ error: `Joke with id: ${passedId} not found. No jokes were deleted.` });
+  } 
+})
 
 //8. DELETE All jokes
+app.delete('/all', (req,res)=>{
+  const userKey = req.query.key;
+  if (userKey === masterKey) {
+    jokes = [];
+    res.sendStatus(200);
+  } else {
+    res.status(403).json({ error: "You do not have permission to delete all jokes." }); 
+  }
+})
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
