@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Notes Capstone Project</title>
+</head>
+<body>
+    <!-- TODO: Make Proper Header-->
+    <div class="header">
+        <h1 class="title">Book Notes Capstone Project</h1>
+        <p class="subtitle">Welcome to the Book Notes Capstone Project!</p>
+    </div>
+
+    <!-- TODO: List the Books Read -->
+    <div class="books-read">
+        <% if (locals.books) { %>
+            <% books.forEach((book) => { %>
+                <div class="book">
+                    <h2 class="book-title"><%= book.title %></h2>
+                    <p class="title"><%= book.title %></p>
+                    <p class="author"><%= book.author %></p>
+                    <img src="<%= book.coverImg %>" alt="Book Cover">
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No books read yet.</p>
+        <% } %>
+    </div>
+
+    <!-- TODO: Add a Form to Add a Book-->
+    <!-- TODO: Add a Form to Delete a Book-->
+    <!-- TODO: Add a Form to Update a Book-->
+</body>
+</html>
