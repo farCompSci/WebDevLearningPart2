@@ -52,9 +52,22 @@ app.post("/add", async (req, res) => {
   }
 });
 
-app.post("/edit", (req, res) => {});
+app.post("/edit", async (req, res) => {
+  const editItemID = req.body.updatedItemId;
+  const editItemTitle = req.body.updatedItemTitle;
 
-app.post("/delete", (req, res) => {});
+  await db.query("UPDATE list_items SET title = $1 WHERE id = $2", [editItemTitle, editItemID]);
+
+  res.redirect("/");
+
+});
+
+
+app.post("/delete", async (req, res) => {
+  const deleteItemID = req.body.deleteItemId;
+  await db.query("DELETE FROM list_items WHERE id = $1", [deleteItemID]);
+  res.redirect("/");
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
