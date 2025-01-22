@@ -24,21 +24,67 @@ const db = new pg.Client({
 
 db.connect();
 
-app.get("/", (req, res) => {
-    res.render("index.ejs");
+function retrieveCoverImg(url) {
+    try {
+        const response = axios.get(url);
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
+
+app.get("/", async (req, res) => {
+    try {
+        const result = await db.query("SELECT * FROM books ORDER BY title");
+        res.render("index.ejs", { books: result.rows });
+    } catch (err) {
+        console.error(err);
+        res.render("index.ejs", { books: [] });
+    }
 });
 
-app.post("/add", (req, res) => {
-
-    const title = req.body.title;
-    const author = req.body.author;
-    const coverImg = req.body.coverImg;
-
-    res.redirect("/");
+app.post("/add", async (req, res) => {
+    const { title, author, coverImgUrl } = req.body;
+    try {
+        const coverImg = await retrieveCoverImg(coverImgUrl);
+        await db.query(
+            "INSERT INTO books (title, author, cover_img) VALUES ($1, $2, $3)",
+            [title, author, coverImg || coverImgUrl]
+        );
+        res.redirect("/");
+    } catch (err) {
+        console.error(err);
+        res.redirect("/");
+    }
 });
 
-app.post("/edit", (req, res) => {});
+app.post("/delete", async (req, res) => {
+    const { title } = req.body;
+    try {
+        await db.query("DELETE FROM books WHERE title = $1", [title]);
+        res.redirect("/");
+    } catch (err) {
+        console.error(err);
+        res.redirect("/");
+    }
+});
 
-app.listen(port, () =>{
+app.post("/update", async (req, res) => {
+    const { title, author, coverImgUrl } = req.body;
+    try {
+        const coverImg = await retrieveCoverImg(coverImgUrl);
+        await db.query(
+            "UPDATE books SET author = $2, cover_img = $3 WHERE title = $1",
+            [title, author, coverImg || coverImgUrl]
+        );
+        res.redirect("/");
+    } catch (err) {
+        console.error(err);
+        res.redirect("/");
+    }
+});
+
+app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
