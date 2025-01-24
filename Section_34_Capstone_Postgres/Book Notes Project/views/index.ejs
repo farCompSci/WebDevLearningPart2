@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Notes Capstone Project</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Book Notes Capstone Project</h1>
+        <p class="subtitle">Welcome to the Book Notes Capstone Project!</p>
+    </div>
+
+    <div class="books-read">
+        <% if (locals.books && books.length > 0) { %>
+            <% books.forEach((book) => { %>
+                <div class="book">
+                    <h2><%= book.title %></h2>
+                    <p class="author"><%= book.author %></p>
+                    <img src="<%= book.cover_img %>" alt="Cover of <%= book.title %>">
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No books read yet.</p>
+        <% } %>
+    </div>
+
+    <div class="add-book-form">
+        <h2>Add a Book</h2>
+        <form action="/add" method="POST">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
+
+            <label for="coverImgUrl">Cover Image URL:</label>
+            <input type="url" id="coverImgUrl" name="coverImgUrl" required>
+
+            <button type="submit">Add Book</button>
+        </form>
+    </div>
+
+    <div class="delete-book-form">
+        <h2>Delete a Book</h2>
+        <form action="/delete" method="POST">
+            <label for="deleteTitle">Title:</label>
+            <input type="text" id="deleteTitle" name="title" required>
+            <button type="submit">Delete Book</button>
+        </form>
+    </div>
+
+    <div class="update-book-form">
+        <h2>Update a Book</h2>
+        <form action="/update" method="POST">
+            <label for="updateTitle">Title:</label>
+            <input type="text" id="updateTitle" name="title" required>
+            
+            <label for="updateAuthor">Author:</label>
+            <input type="text" id="updateAuthor" name="author" required>
+            
+            <label for="updateCoverImgUrl">Cover Image URL:</label>
+            <input type="url" id="updateCoverImgUrl" name="coverImgUrl" required>
+            
+            <button type="submit">Update Book</button>
+        </form>
+    </div>
+</body>
+</html>
