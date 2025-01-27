@@ -135,6 +135,23 @@ app.post("/register", async (req, res) => {
 });
 
 //TODO: Create the post route for submit.
+app.post('/submit', async (req,res)=>{
+  if (req.isAuthenticated()){
+    let secretToSubmit = req.body.secret;
+    try{
+      await db.query(
+        'UPDATE users SET secrets = $1 WHERE email = $2;',
+        [secretToSubmit, req.user.email]
+      );    
+    }catch (err){
+      console.log(`Could not insert into database because: ${err}`);
+    }
+    res.redirect('/secrets');
+    
+  }else{
+    res.redirect('/login');
+  }
+})
 //Handle the submitted data and add it to the database
 
 passport.use(
